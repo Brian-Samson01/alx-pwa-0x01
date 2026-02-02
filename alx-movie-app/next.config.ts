@@ -3,15 +3,23 @@ import type { NextConfig } from "next";
 
 const withPWA = withPWAInit({
   dest: "public",
+  disable: process.env.NODE_ENV === "development",
 });
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["m.media-amazon.com"],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'm.media-amazon.com',
+        pathname: '/**',
+      },
+    ],
   },
 };
 
 export default withPWA({
   ...nextConfig,
+  turbopack: {},
 });
